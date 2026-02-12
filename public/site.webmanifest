@@ -1,8 +1,13 @@
 {
-  "name": "Peter Steinberger",
-  "short_name": "Peter Steinberger",
-  "description": "iOS developer, entrepreneur, founder of PSPDFKit (acquired), vibe coding my next project",
+  "name": "Cormac Dineen",
+  "short_name": "Cormac Dineen",
+  "description": "PhD researcher. Photography, reading, and occasional writing.",
   "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
     {
       "src": "/favicon.ico",
       "sizes": "16x16 32x32 48x48",

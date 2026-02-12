@@ -1,0 +1,98 @@
+[
+  {
+    "type": "book",
+    "title": "Sample Book Title",
+    "creator": "Author Name",
+    "cover": "https://placehold.co/200x300/1a3a5c/ffffff?text=Book",
+    "note": "A brief note about why you recommend this book.",
+    "tags": ["non-fiction", "science"]
+  },
+  {
+    "type": "book",
+    "title": "Another Book",
+    "creator": "Another Author",
+    "cover": "https://placehold.co/200x300/1a3a5c/ffffff?text=Book+2",
+    "note": "Another recommendation.",
+    "tags": ["fiction", "classic"]
+  },
+  {
+    "type": "podcast",
+    "title": "Sample Podcast",
+    "creator": "Podcast Host",
+    "cover": "https://placehold.co/200x200/0d7377/ffffff?text=Podcast",
+    "note": "A brief note about this podcast.",
+    "tags": ["technology", "interviews"]
+  },
+  {
+    "type": "podcast",
+    "title": "Another Podcast",
+    "creator": "Another Host",
+    "cover": "https://placehold.co/200x200/0d7377/ffffff?text=Podcast+2",
+    "note": "Another podcast recommendation.",
+    "tags": ["storytelling", "history"]
+  },
+  {
+    "type": "movie",
+    "title": "Sample Film",
+    "creator": "Director Name",
+    "cover": "https://placehold.co/200x300/92400e/ffffff?text=Film",
+    "note": "A brief note about this film.",
+    "tags": ["drama", "award-winner"]
+  },
+  {
+    "type": "movie",
+    "title": "Another Film",
+    "creator": "Another Director",
+    "cover": "https://placehold.co/200x300/92400e/ffffff?text=Film+2",
+    "note": "Another film recommendation.",
+    "tags": ["documentary", "nature"]
+  },
+  {
+    "type": "tv",
+    "title": "Sample TV Show",
+    "creator": "Showrunner Name",
+    "cover": "https://placehold.co/200x300/38b2ac/ffffff?text=TV",
+    "note": "A brief note about this TV show.",
+    "tags": ["drama", "thriller"]
+  },
+  {
+    "type": "tv",
+    "title": "Another TV Show",
+    "creator": "Another Showrunner",
+    "cover": "https://placehold.co/200x300/38b2ac/ffffff?text=TV+2",
+    "note": "Another TV recommendation.",
+    "tags": ["comedy", "classic"]
+  },
+  {
+    "type": "sport",
+    "title": "Sample Live Sport",
+    "creator": "League / Event",
+    "cover": "https://placehold.co/200x200/2d3748/ffffff?text=Sport",
+    "note": "A brief note about this sport or event.",
+    "tags": ["football", "live"]
+  },
+  {
+    "type": "sport",
+    "title": "Another Sport",
+    "creator": "Another League",
+    "cover": "https://placehold.co/200x200/2d3748/ffffff?text=Sport+2",
+    "note": "Another sport recommendation.",
+    "tags": ["rugby", "live"]
+  },
+  {
+    "type": "food",
+    "title": "Sample Restaurant",
+    "creator": "Location / Chef",
+    "cover": "https://placehold.co/200x200/d4a259/ffffff?text=Food",
+    "note": "A brief note about this restaurant or recipe.",
+    "tags": ["restaurant", "irish"]
+  },
+  {
+    "type": "food",
+    "title": "Another Food Spot",
+    "creator": "Another Location",
+    "cover": "https://placehold.co/200x200/d4a259/ffffff?text=Food+2",
+    "note": "Another food recommendation.",
+    "tags": ["cafe", "brunch"]
+  }
+]

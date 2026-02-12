@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import Card from "@/components/Card.astro";
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import { SITE } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sortedPosts = getSortedPosts(posts);
+---
+
+<Layout title={`Blog | ${SITE.title}`} description="Research updates, PhD notes, and writing by Cormac Dineen.">
+  <Header />
+  <main id="main-content" class="mx-auto w-full max-w-3xl px-4 pb-4">
+    <h1 class="text-2xl font-semibold sm:text-3xl mt-8">Blog</h1>
+    <p class="mt-2 mb-6 italic">Research updates and writing</p>
+    {
+      sortedPosts.length === 0 ? (
+        <p class="text-foreground/60">No posts yet. Check back soon.</p>
+      ) : (
+        <ul>
+          {sortedPosts.map((data) => (
+            <Card {...data} />
+          ))}
+        </ul>
+      )
+    }
+  </main>
+  <Footer />
+</Layout>

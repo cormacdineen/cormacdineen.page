@@ -38,3 +38,7 @@ src/content/temp/
 
 # jetbrains setting folder
 .idea/
+
+# Playwright
+playwright-report/
+test-results/
