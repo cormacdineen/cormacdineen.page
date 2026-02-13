@@ -68,15 +68,15 @@ export const NAV_LINKS: SocialLink[] = [
 // Social media links
 export const SOCIAL_LINKS: SocialLink[] = [
   {
-    href: "https://github.com/placeholder",
+    href: "https://github.com/cormacdineen",
     label: "GitHub",
   },
   {
-    href: "https://orcid.org/placeholder",
+    href: "https://orcid.org/0009-0006-5969-2226",
     label: "ORCID",
   },
   {
-    href: "https://www.linkedin.com/in/placeholder",
+    href: "https://www.linkedin.com/in/cormac-dineen-262918149/",
     label: "LinkedIn",
   },
   {
