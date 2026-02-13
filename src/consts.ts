@@ -34,7 +34,7 @@ export const SITE: Site = {
   website: "https://cormacdineen.page/",
   author: "Cormac Dineen",
   profile: "https://cormacdineen.page/about",
-  desc: "PhD researcher. Photography, reading, and occasional writing.",
+  desc: "PhD student. Blog, photos and recommendations.",
   title: "Cormac Dineen",
   ogImage: "og.png",
   lightAndDarkMode: true,
@@ -80,6 +80,10 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: "LinkedIn",
   },
   {
+    href: "https://open.spotify.com/user/ncwlzlrq8rzt1ifp08ina5u77",
+    label: "Spotify",
+  },
+  {
     href: "/rss.xml",
     label: "RSS",
   },
@@ -91,5 +95,6 @@ export const ICON_MAP: Record<string, string> = {
   ORCID: "orcid",
   LinkedIn: "linkedin",
   RSS: "rss",
+  Spotify: "spotify",
   Email: "mail",
 };

@@ -19,6 +19,11 @@ const { noMarginTop = false } = Astro.props;
       <span class="text-foreground/60">
         &copy; {new Date().getFullYear()} Cormac Dineen
       </span>
+      <span class="text-foreground/40 mx-1 hidden sm:inline">&bull;</span>
+      <span class="text-foreground/40 text-xs">
+        Built with <a href="https://astro.build" class="hover:text-accent" target="_blank" rel="noopener noreferrer">Astro</a>
+        &amp; <a href="https://github.com/satnaing/astro-paper" class="hover:text-accent" target="_blank" rel="noopener noreferrer">AstroPaper</a>
+      </span>
     </div>
   </div>
 </footer>

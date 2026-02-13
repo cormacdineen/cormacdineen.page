@@ -23,6 +23,13 @@ export const SOCIALS = [
     active: true,
   },
   {
+    name: "Spotify",
+    href: "https://open.spotify.com/user/ncwlzlrq8rzt1ifp08ina5u77",
+    linkTitle: `${SITE.title} on Spotify`,
+    icon: "spotify",
+    active: true,
+  },
+  {
     name: "Mail",
     href: "mailto:cormac@cormacdineen.page",
     linkTitle: `Send an email to ${SITE.title}`,

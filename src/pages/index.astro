@@ -23,24 +23,31 @@ const recentPosts = sortedPosts.slice(0, 3);
   <Header />
   <main id="main-content" data-layout="index">
     <section id="hero" class="pt-8 pb-6">
-      <div class="text-center sm:text-left">
-        <h1 class="my-2 inline-block text-3xl font-bold sm:my-4 sm:text-4xl">
-          Cormac Dineen
-        </h1>
-        <p class="text-lg text-foreground/80 mt-2">
-          PhD Researcher
-        </p>
-        <p class="mt-4 max-w-xl">
-          Welcome to my corner of the internet. I write about my research,
-          share photography, and post about my cultural stew — books, podcasts, films, and more.
-        </p>
-        {
-          SOCIALS.filter((social) => social.active).length > 0 && (
-            <div class="mt-6 flex flex-row items-center justify-center sm:justify-start">
-              <Socials />
-            </div>
-          )
-        }
+      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+        <img
+          src="/assets/img/covers/PXL_20250702_131936492.jpg"
+          alt="Cormac Dineen"
+          class="w-40 rounded-xl object-cover shrink-0"
+        />
+        <div class="text-center sm:text-left">
+          <h1 class="my-2 inline-block text-3xl font-bold sm:my-4 sm:text-4xl">
+            Cormac Dineen
+          </h1>
+          <p class="text-lg text-foreground/80 mt-2">
+            Mechanical engineering PhD student
+          </p>
+          <p class="mt-4 max-w-xl">
+            Welcome to my website. I write about my research,
+            share photography, and my cultural stew (books, TV, films, sport and food).
+          </p>
+          {
+            SOCIALS.filter((social) => social.active).length > 0 && (
+              <div class="mt-6 flex flex-row items-center justify-center sm:justify-start">
+                <Socials />
+              </div>
+            )
+          }
+        </div>
       </div>
     </section>
 
