@@ -91,7 +91,7 @@ const allTags = [...new Set(photos.flatMap((p) => p.tags || []))].sort();
 </Layout>
 
 <script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     const lightbox = document.getElementById("lightbox");
     const lbImg = document.getElementById("lb-img");
     const lbCaption = document.getElementById("lb-caption");

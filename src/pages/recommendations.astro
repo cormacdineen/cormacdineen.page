@@ -94,7 +94,7 @@ const allTags = [...new Set(recommendations.flatMap((item) => item.tags || []))]
 </Layout>
 
 <script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     const categoryButtons = document.querySelectorAll(".filter-btn");
     const tagButtons = document.querySelectorAll(".tag-btn");
     const cards = document.querySelectorAll(".rec-card");

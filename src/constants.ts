@@ -3,21 +3,21 @@ import { SITE } from "./consts";
 export const SOCIALS = [
   {
     name: "Github",
-    href: "https://github.com/placeholder",
+    href: "https://github.com/cormacdineen",
     linkTitle: `${SITE.title} on Github`,
     icon: "github",
     active: true,
   },
   {
     name: "ORCID",
-    href: "https://orcid.org/placeholder",
+    href: "https://orcid.org/0009-0006-5969-2226",
     linkTitle: `${SITE.title} on ORCID`,
     icon: "orcid",
     active: true,
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/placeholder/",
+    href: "https://www.linkedin.com/in/cormac-dineen-262918149/",
     linkTitle: `${SITE.title} on LinkedIn`,
     icon: "linkedin",
     active: true,
