@@ -120,7 +120,8 @@ export default defineConfig({
       },
       workbox: {
         navigateFallback: "/404",
-        globPatterns: ["**/*.{css,js,html,svg,png,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,ico}"],
+        globPatterns: ["**/*.{css,js,html,svg,png,gif,webp,woff,woff2,ttf,eot,ico}"],
+        globIgnores: ["assets/img/photography/*.JPG", "assets/img/photography/*.jpg", "assets/img/photography/*.jpeg"],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,

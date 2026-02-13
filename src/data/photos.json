@@ -1,73 +1,11 @@
 [
   {
-    "src": "/assets/img/photography/DSC04654.JPG",
-    "alt": "DSC04654",
+    "src": "/assets/img/photography/DSC04984.JPG",
+    "thumb": "/assets/img/photography/thumbs/DSC04984.webp",
+    "display": "/assets/img/photography/display/DSC04984.webp",
+    "alt": "DSC04984",
     "caption": "",
-    "date": "",
-    "camera": "",
-    "tags": [],
-    "exif": {
-      "focalLength": "",
-      "aperture": "",
-      "iso": null,
-      "shutter": "",
-      "width": 6000,
-      "height": 4000
-    }
-  },
-  {
-    "src": "/assets/img/photography/DSC04902.JPG",
-    "alt": "DSC04902",
-    "caption": "",
-    "date": "",
-    "camera": "",
-    "tags": [],
-    "exif": {
-      "focalLength": "",
-      "aperture": "",
-      "iso": null,
-      "shutter": "",
-      "width": 6000,
-      "height": 4000
-    }
-  },
-  {
-    "src": "/assets/img/photography/DSC04923.JPG",
-    "alt": "DSC04923",
-    "caption": "",
-    "date": "",
-    "camera": "",
-    "tags": [],
-    "exif": {
-      "focalLength": "",
-      "aperture": "",
-      "iso": null,
-      "shutter": "",
-      "width": 6000,
-      "height": 4000
-    }
-  },
-  {
-    "src": "/assets/img/photography/DSC04926.JPG",
-    "alt": "DSC04926",
-    "caption": "",
-    "date": "",
-    "camera": "",
-    "tags": [],
-    "exif": {
-      "focalLength": "",
-      "aperture": "",
-      "iso": null,
-      "shutter": "",
-      "width": 6000,
-      "height": 4000
-    }
-  },
-  {
-    "src": "/assets/img/photography/DSC04931.JPG",
-    "alt": "DSC04931",
-    "caption": "",
-    "date": "",
+    "date": "2026-02-12",
     "camera": "",
     "tags": [],
     "exif": {
@@ -81,9 +19,11 @@
   },
   {
     "src": "/assets/img/photography/DSC04971.JPG",
+    "thumb": "/assets/img/photography/thumbs/DSC04971.webp",
+    "display": "/assets/img/photography/display/DSC04971.webp",
     "alt": "DSC04971",
     "caption": "",
-    "date": "",
+    "date": "2026-01-30",
     "camera": "",
     "tags": [],
     "exif": {
@@ -97,9 +37,11 @@
   },
   {
     "src": "/assets/img/photography/DSC04972.JPG",
+    "thumb": "/assets/img/photography/thumbs/DSC04972.webp",
+    "display": "/assets/img/photography/display/DSC04972.webp",
     "alt": "DSC04972",
     "caption": "",
-    "date": "",
+    "date": "2026-01-30",
     "camera": "",
     "tags": [],
     "exif": {
@@ -112,10 +54,84 @@
     }
   },
   {
-    "src": "/assets/img/photography/DSC04984.JPG",
-    "alt": "DSC04984",
+    "src": "/assets/img/photography/DSC04926.JPG",
+    "thumb": "/assets/img/photography/thumbs/DSC04926.webp",
+    "display": "/assets/img/photography/display/DSC04926.webp",
+    "alt": "DSC04926",
     "caption": "",
-    "date": "",
+    "date": "2026-01-16",
+    "camera": "",
+    "tags": [],
+    "exif": {
+      "focalLength": "",
+      "aperture": "",
+      "iso": null,
+      "shutter": "",
+      "width": 6000,
+      "height": 4000
+    }
+  },
+  {
+    "src": "/assets/img/photography/DSC04931.JPG",
+    "thumb": "/assets/img/photography/thumbs/DSC04931.webp",
+    "display": "/assets/img/photography/display/DSC04931.webp",
+    "alt": "DSC04931",
+    "caption": "",
+    "date": "2026-01-16",
+    "camera": "",
+    "tags": [],
+    "exif": {
+      "focalLength": "",
+      "aperture": "",
+      "iso": null,
+      "shutter": "",
+      "width": 6000,
+      "height": 4000
+    }
+  },
+  {
+    "src": "/assets/img/photography/DSC04902.JPG",
+    "thumb": "/assets/img/photography/thumbs/DSC04902.webp",
+    "display": "/assets/img/photography/display/DSC04902.webp",
+    "alt": "DSC04902",
+    "caption": "",
+    "date": "2026-01-07",
+    "camera": "",
+    "tags": [],
+    "exif": {
+      "focalLength": "",
+      "aperture": "",
+      "iso": null,
+      "shutter": "",
+      "width": 6000,
+      "height": 4000
+    }
+  },
+  {
+    "src": "/assets/img/photography/DSC04923.JPG",
+    "thumb": "/assets/img/photography/thumbs/DSC04923.webp",
+    "display": "/assets/img/photography/display/DSC04923.webp",
+    "alt": "DSC04923",
+    "caption": "",
+    "date": "2026-01-07",
+    "camera": "",
+    "tags": [],
+    "exif": {
+      "focalLength": "",
+      "aperture": "",
+      "iso": null,
+      "shutter": "",
+      "width": 6000,
+      "height": 4000
+    }
+  },
+  {
+    "src": "/assets/img/photography/DSC04654.JPG",
+    "thumb": "/assets/img/photography/thumbs/DSC04654.webp",
+    "display": "/assets/img/photography/display/DSC04654.webp",
+    "alt": "DSC04654",
+    "caption": "",
+    "date": "2025-11-28",
     "camera": "",
     "tags": [],
     "exif": {

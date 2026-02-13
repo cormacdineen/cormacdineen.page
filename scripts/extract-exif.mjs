@@ -1,8 +1,11 @@
 /**
- * EXIF Data Extraction Script
+ * Photo Processing Script
  *
- * Reads all images from public/assets/img/photography/ and extracts EXIF metadata.
- * Outputs src/data/photos.json for use by the photography page.
+ * Reads all images from public/assets/img/photography/ and:
+ *   1. Generates WebP thumbnails (800px wide) in thumbs/
+ *   2. Generates WebP display versions (1920px wide) in display/
+ *   3. Extracts EXIF metadata
+ *   4. Outputs src/data/photos.json
  *
  * Usage: node scripts/extract-exif.mjs
  */
@@ -12,10 +15,17 @@ import path from "node:path";
 import sharp from "sharp";
 
 const PHOTO_DIR = path.resolve("public/assets/img/photography");
+const THUMB_DIR = path.join(PHOTO_DIR, "thumbs");
+const DISPLAY_DIR = path.join(PHOTO_DIR, "display");
 const OUTPUT_FILE = path.resolve("src/data/photos.json");
 const EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".tiff"];
 
-async function extractExif() {
+const THUMB_WIDTH = 800;
+const DISPLAY_WIDTH = 1920;
+const THUMB_QUALITY = 80;
+const DISPLAY_QUALITY = 85;
+
+async function processPhotos() {
   if (!fs.existsSync(PHOTO_DIR)) {
     console.log(`Photo directory not found: ${PHOTO_DIR}`);
     console.log("Creating directory...");
@@ -27,7 +37,14 @@ async function extractExif() {
 
   const files = fs
     .readdirSync(PHOTO_DIR)
-    .filter((f) => EXTENSIONS.includes(path.extname(f).toLowerCase()))
+    .filter((f) => {
+      // Only process files in the root photography dir, not subdirectories
+      const fullPath = path.join(PHOTO_DIR, f);
+      return (
+        fs.statSync(fullPath).isFile() &&
+        EXTENSIONS.includes(path.extname(f).toLowerCase())
+      );
+    })
     .sort();
 
   if (files.length === 0) {
@@ -39,19 +56,44 @@ async function extractExif() {
 
   console.log(`Found ${files.length} image(s) in ${PHOTO_DIR}`);
 
+  // Create output directories
+  fs.mkdirSync(THUMB_DIR, { recursive: true });
+  fs.mkdirSync(DISPLAY_DIR, { recursive: true });
+
   const photos = [];
 
   for (const file of files) {
     const filePath = path.join(PHOTO_DIR, file);
     const baseName = path.basename(file, path.extname(file));
+    const webpName = `${baseName}.webp`;
 
     try {
       const image = sharp(filePath);
       const metadata = await image.metadata();
-      const exifData = metadata.exif ? parseExifFields(metadata) : {};
+      const exifData = metadata.exif ? parseExifBuffer(metadata.exif) : {};
+
+      // Generate thumbnail (800px wide)
+      const thumbPath = path.join(THUMB_DIR, webpName);
+      await sharp(filePath)
+        .resize(THUMB_WIDTH, null, { withoutEnlargement: true })
+        .webp({ quality: THUMB_QUALITY })
+        .toFile(thumbPath);
+      const thumbSize = fs.statSync(thumbPath).size;
+
+      // Generate display version (1920px wide)
+      const displayPath = path.join(DISPLAY_DIR, webpName);
+      await sharp(filePath)
+        .resize(DISPLAY_WIDTH, null, { withoutEnlargement: true })
+        .webp({ quality: DISPLAY_QUALITY })
+        .toFile(displayPath);
+      const displaySize = fs.statSync(displayPath).size;
+
+      const originalSize = fs.statSync(filePath).size;
 
       const photo = {
         src: `/assets/img/photography/${file}`,
+        thumb: `/assets/img/photography/thumbs/${webpName}`,
+        display: `/assets/img/photography/display/${webpName}`,
         alt: baseName.replace(/[-_]/g, " "),
         caption: "",
         date: exifData.date || "",
@@ -68,9 +110,19 @@ async function extractExif() {
       };
 
       photos.push(photo);
-      console.log(`  ${file}: ${metadata.width}x${metadata.height}${exifData.camera ? ` (${exifData.camera})` : ""}`);
+
+      const savings = (
+        ((originalSize - thumbSize - displaySize) / originalSize) *
+        100
+      ).toFixed(0);
+      console.log(
+        `  ${file}: ${metadata.width}x${metadata.height} | ` +
+          `original ${formatBytes(originalSize)} -> ` +
+          `thumb ${formatBytes(thumbSize)} + display ${formatBytes(displaySize)} ` +
+          `(${savings}% smaller)`
+      );
     } catch (err) {
-      console.error(`  Error reading ${file}:`, err.message);
+      console.error(`  Error processing ${file}:`, err.message);
     }
   }
 
@@ -90,31 +142,100 @@ async function extractExif() {
 
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(photos, null, 2), "utf-8");
   console.log(`\nWrote ${photos.length} photo(s) to ${OUTPUT_FILE}`);
+
+  // Summary
+  const totalOriginal = files.reduce(
+    (sum, f) => sum + fs.statSync(path.join(PHOTO_DIR, f)).size,
+    0
+  );
+  const totalThumb = photos.reduce(
+    (sum, p) =>
+      sum +
+      fs.statSync(path.join(PHOTO_DIR, "thumbs", path.basename(p.thumb)))
+        .size,
+    0
+  );
+  const totalDisplay = photos.reduce(
+    (sum, p) =>
+      sum +
+      fs.statSync(path.join(PHOTO_DIR, "display", path.basename(p.display)))
+        .size,
+    0
+  );
+
+  console.log(`\n--- Summary ---`);
+  console.log(`  Originals:     ${formatBytes(totalOriginal)}`);
+  console.log(`  Thumbnails:    ${formatBytes(totalThumb)} (grid view)`);
+  console.log(`  Display:       ${formatBytes(totalDisplay)} (lightbox)`);
+  console.log(
+    `  Page load:     ${formatBytes(totalThumb)} (was ${formatBytes(totalOriginal)})`
+  );
+  console.log(
+    `  Reduction:     ${(((totalOriginal - totalThumb) / totalOriginal) * 100).toFixed(0)}% smaller for initial page load`
+  );
 }
 
-function parseExifFields(metadata) {
+/**
+ * Parse EXIF data from the raw buffer using IFD tag reading.
+ */
+function parseExifBuffer(exifBuffer) {
   const result = {};
 
-  // sharp exposes some EXIF data directly in metadata
-  if (metadata.exif) {
-    try {
-      // Use sharp's built-in EXIF parsing
-      // The raw EXIF buffer can be parsed, but sharp also exposes some fields
-      // For a simple approach, we extract what's available from metadata
-    } catch {
-      // Fallback if parsing fails
-    }
-  }
+  try {
+    // The EXIF buffer from sharp starts with "Exif\0\0" header (6 bytes)
+    // followed by TIFF data. We'll do a simple text scan for common fields
+    // since full IFD parsing is complex and we already have sharp.
 
-  // sharp metadata fields
-  if (metadata.density) {
-    result.dpi = metadata.density;
+    const text = exifBuffer.toString("latin1");
+
+    // Try to extract date - look for EXIF date pattern YYYY:MM:DD HH:MM:SS
+    const dateMatch = text.match(/(\d{4}):(\d{2}):(\d{2}) \d{2}:\d{2}:\d{2}/);
+    if (dateMatch) {
+      result.date = `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}`;
+    }
+
+    // Camera make and model - these are usually null-terminated ASCII strings
+    // We look for common camera manufacturer names followed by model info
+    const makeModelPatterns = [
+      /SONY\0([^\0]+)/,
+      /Canon\0([^\0]+)/,
+      /NIKON[^\0]*\0([^\0]+)/,
+      /FUJIFILM\0([^\0]+)/,
+      /Panasonic\0([^\0]+)/,
+      /OLYMPUS[^\0]*\0([^\0]+)/,
+      /RICOH[^\0]*\0([^\0]+)/,
+      /LEICA[^\0]*\0([^\0]+)/,
+      /Apple\0([^\0]+)/,
+      /samsung\0([^\0]+)/i,
+      /Google\0([^\0]+)/,
+    ];
+
+    for (const pattern of makeModelPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        const make = text.match(
+          /(SONY|Canon|NIKON|FUJIFILM|Panasonic|OLYMPUS|RICOH|LEICA|Apple|samsung|Google)/i
+        );
+        result.camera = make
+          ? `${make[1]} ${match[1].trim()}`
+          : match[1].trim();
+        break;
+      }
+    }
+  } catch {
+    // Silently fail - EXIF parsing is best-effort
   }
 
   return result;
 }
 
-extractExif().catch((err) => {
+function formatBytes(bytes) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+processPhotos().catch((err) => {
   console.error("Fatal error:", err);
   process.exit(1);
 });
