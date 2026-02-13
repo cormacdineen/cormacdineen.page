@@ -4,7 +4,7 @@ const NAV_PAGES = [
   { path: "/", title: "Cormac Dineen" },
   { path: "/blog", title: "Blog" },
   { path: "/photography", title: "Photography" },
-  { path: "/recommendations", title: "Recommendations" },
+  { path: "/recommendations", title: "Cultural Stew" },
   { path: "/about", title: "About" },
 ];
 
@@ -99,7 +99,7 @@ test.describe("Photography lightbox", () => {
   });
 });
 
-test.describe("Recommendations filtering", () => {
+test.describe("Cultural Stew filtering", () => {
   test("category filter shows correct cards", async ({ page }) => {
     await page.goto("/recommendations");
 

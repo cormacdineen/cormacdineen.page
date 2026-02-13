@@ -9,12 +9,12 @@ import photosData from "@/data/photos.json";
 const hasRealPhotos = photosData.length > 0;
 
 const placeholderPhotos = [
-  { src: "https://placehold.co/800x600/0d7377/ffffff?text=Photo+1", thumb: "https://placehold.co/800x600/0d7377/ffffff?text=Photo+1", display: "https://placehold.co/800x600/0d7377/ffffff?text=Photo+1", alt: "Placeholder photo 1", caption: "Sample photo 1", date: "2026-01", tags: ["landscape"] },
-  { src: "https://placehold.co/600x800/1a3a5c/ffffff?text=Photo+2", thumb: "https://placehold.co/600x800/1a3a5c/ffffff?text=Photo+2", display: "https://placehold.co/600x800/1a3a5c/ffffff?text=Photo+2", alt: "Placeholder photo 2", caption: "Sample photo 2", date: "2026-01", tags: ["portrait"] },
-  { src: "https://placehold.co/800x500/38b2ac/ffffff?text=Photo+3", thumb: "https://placehold.co/800x500/38b2ac/ffffff?text=Photo+3", display: "https://placehold.co/800x500/38b2ac/ffffff?text=Photo+3", alt: "Placeholder photo 3", caption: "Sample photo 3", date: "2025-12", tags: ["landscape"] },
-  { src: "https://placehold.co/700x700/92400e/ffffff?text=Photo+4", thumb: "https://placehold.co/700x700/92400e/ffffff?text=Photo+4", display: "https://placehold.co/700x700/92400e/ffffff?text=Photo+4", alt: "Placeholder photo 4", caption: "Sample photo 4", date: "2025-12", tags: ["street"] },
-  { src: "https://placehold.co/800x600/2d3748/ffffff?text=Photo+5", thumb: "https://placehold.co/800x600/2d3748/ffffff?text=Photo+5", display: "https://placehold.co/800x600/2d3748/ffffff?text=Photo+5", alt: "Placeholder photo 5", caption: "Sample photo 5", date: "2025-11", tags: ["street"] },
-  { src: "https://placehold.co/500x800/d4a259/ffffff?text=Photo+6", thumb: "https://placehold.co/500x800/d4a259/ffffff?text=Photo+6", display: "https://placehold.co/500x800/d4a259/ffffff?text=Photo+6", alt: "Placeholder photo 6", caption: "Sample photo 6", date: "2025-11", tags: ["portrait"] },
+  { thumb: "https://placehold.co/800x600/0d7377/ffffff?text=Photo+1", display: "https://placehold.co/800x600/0d7377/ffffff?text=Photo+1", alt: "Placeholder photo 1", caption: "Sample photo 1", date: "2026-01", tags: ["landscape"] },
+  { thumb: "https://placehold.co/600x800/1a3a5c/ffffff?text=Photo+2", display: "https://placehold.co/600x800/1a3a5c/ffffff?text=Photo+2", alt: "Placeholder photo 2", caption: "Sample photo 2", date: "2026-01", tags: ["portrait"] },
+  { thumb: "https://placehold.co/800x500/38b2ac/ffffff?text=Photo+3", display: "https://placehold.co/800x500/38b2ac/ffffff?text=Photo+3", alt: "Placeholder photo 3", caption: "Sample photo 3", date: "2025-12", tags: ["landscape"] },
+  { thumb: "https://placehold.co/700x700/92400e/ffffff?text=Photo+4", display: "https://placehold.co/700x700/92400e/ffffff?text=Photo+4", alt: "Placeholder photo 4", caption: "Sample photo 4", date: "2025-12", tags: ["street"] },
+  { thumb: "https://placehold.co/800x600/2d3748/ffffff?text=Photo+5", display: "https://placehold.co/800x600/2d3748/ffffff?text=Photo+5", alt: "Placeholder photo 5", caption: "Sample photo 5", date: "2025-11", tags: ["street"] },
+  { thumb: "https://placehold.co/500x800/d4a259/ffffff?text=Photo+6", display: "https://placehold.co/500x800/d4a259/ffffff?text=Photo+6", alt: "Placeholder photo 6", caption: "Sample photo 6", date: "2025-11", tags: ["portrait"] },
 ];
 
 const photos = hasRealPhotos ? photosData : placeholderPhotos;
@@ -59,14 +59,14 @@ const allTags = [...new Set(photos.flatMap((p) => p.tags || []))].sort();
         <button
           class="gallery-item overflow-hidden rounded-lg cursor-pointer border-0 p-0 bg-transparent"
           data-index={i}
-          data-display={photo.display || photo.src}
+          data-display={photo.display}
           data-alt={photo.alt}
           data-caption={photo.caption || ""}
           data-date={photo.date?.slice(0, 7) || ""}
           data-tags={(photo.tags || []).join(",")}
         >
           <img
-            src={photo.thumb || photo.src}
+            src={photo.thumb}
             alt={photo.alt}
             class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
             loading="lazy"

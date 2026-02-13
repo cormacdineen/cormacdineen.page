@@ -1,22 +1,24 @@
 /**
  * Photo Processing Script
  *
- * Reads all images from public/assets/img/photography/ and:
- *   1. Generates WebP thumbnails (800px wide) in thumbs/
- *   2. Generates WebP display versions (1920px wide) in display/
+ * Reads all images from photos-source/ and:
+ *   1. Generates WebP thumbnails (800px wide) in public/assets/img/photography/thumbs/
+ *   2. Generates WebP display versions (1920px wide) in public/assets/img/photography/display/
  *   3. Extracts EXIF metadata
  *   4. Outputs src/data/photos.json
  *
  * Usage: node scripts/extract-exif.mjs
+ * Workflow: Drop originals into photos-source/, run this script, commit the output.
  */
 
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
-const PHOTO_DIR = path.resolve("public/assets/img/photography");
-const THUMB_DIR = path.join(PHOTO_DIR, "thumbs");
-const DISPLAY_DIR = path.join(PHOTO_DIR, "display");
+const SOURCE_DIR = path.resolve("photos-source");
+const OUTPUT_DIR = path.resolve("public/assets/img/photography");
+const THUMB_DIR = path.join(OUTPUT_DIR, "thumbs");
+const DISPLAY_DIR = path.join(OUTPUT_DIR, "display");
 const OUTPUT_FILE = path.resolve("src/data/photos.json");
 const EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".tiff"];
 
@@ -26,20 +28,19 @@ const THUMB_QUALITY = 80;
 const DISPLAY_QUALITY = 85;
 
 async function processPhotos() {
-  if (!fs.existsSync(PHOTO_DIR)) {
-    console.log(`Photo directory not found: ${PHOTO_DIR}`);
+  if (!fs.existsSync(SOURCE_DIR)) {
+    console.log(`Source directory not found: ${SOURCE_DIR}`);
     console.log("Creating directory...");
-    fs.mkdirSync(PHOTO_DIR, { recursive: true });
+    fs.mkdirSync(SOURCE_DIR, { recursive: true });
     fs.writeFileSync(OUTPUT_FILE, "[]", "utf-8");
-    console.log("Wrote empty photos.json");
+    console.log("Wrote empty photos.json. Drop your photos into photos-source/ and run again.");
     return;
   }
 
   const files = fs
-    .readdirSync(PHOTO_DIR)
+    .readdirSync(SOURCE_DIR)
     .filter((f) => {
-      // Only process files in the root photography dir, not subdirectories
-      const fullPath = path.join(PHOTO_DIR, f);
+      const fullPath = path.join(SOURCE_DIR, f);
       return (
         fs.statSync(fullPath).isFile() &&
         EXTENSIONS.includes(path.extname(f).toLowerCase())
@@ -48,13 +49,13 @@ async function processPhotos() {
     .sort();
 
   if (files.length === 0) {
-    console.log("No image files found in", PHOTO_DIR);
+    console.log("No image files found in", SOURCE_DIR);
     fs.writeFileSync(OUTPUT_FILE, "[]", "utf-8");
     console.log("Wrote empty photos.json");
     return;
   }
 
-  console.log(`Found ${files.length} image(s) in ${PHOTO_DIR}`);
+  console.log(`Found ${files.length} image(s) in ${SOURCE_DIR}`);
 
   // Create output directories
   fs.mkdirSync(THUMB_DIR, { recursive: true });
@@ -63,7 +64,7 @@ async function processPhotos() {
   const photos = [];
 
   for (const file of files) {
-    const filePath = path.join(PHOTO_DIR, file);
+    const filePath = path.join(SOURCE_DIR, file);
     const baseName = path.basename(file, path.extname(file));
     const webpName = `${baseName}.webp`;
 
@@ -91,7 +92,6 @@ async function processPhotos() {
       const originalSize = fs.statSync(filePath).size;
 
       const photo = {
-        src: `/assets/img/photography/${file}`,
         thumb: `/assets/img/photography/thumbs/${webpName}`,
         display: `/assets/img/photography/display/${webpName}`,
         alt: baseName.replace(/[-_]/g, " "),
@@ -145,20 +145,20 @@ async function processPhotos() {
 
   // Summary
   const totalOriginal = files.reduce(
-    (sum, f) => sum + fs.statSync(path.join(PHOTO_DIR, f)).size,
+    (sum, f) => sum + fs.statSync(path.join(SOURCE_DIR, f)).size,
     0
   );
   const totalThumb = photos.reduce(
     (sum, p) =>
       sum +
-      fs.statSync(path.join(PHOTO_DIR, "thumbs", path.basename(p.thumb)))
+      fs.statSync(path.join(OUTPUT_DIR, "thumbs", path.basename(p.thumb)))
         .size,
     0
   );
   const totalDisplay = photos.reduce(
     (sum, p) =>
       sum +
-      fs.statSync(path.join(PHOTO_DIR, "display", path.basename(p.display)))
+      fs.statSync(path.join(OUTPUT_DIR, "display", path.basename(p.display)))
         .size,
     0
   );

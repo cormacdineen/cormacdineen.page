@@ -10,7 +10,7 @@ PhD researcher. Photography, reading, and occasional writing.
 - [About](/about.md)
 - [Blog](/blog)
 - [Photography](/photography)
-- [Recommendations](/recommendations)
+- [Cultural Stew](/recommendations)
 - [RSS Feed](/rss.xml)
 
 ---

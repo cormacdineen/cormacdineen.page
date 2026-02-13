@@ -61,7 +61,7 @@ export const NAV_LINKS: SocialLink[] = [
   { href: "/", label: "Home" },
   { href: "/blog", label: "Blog" },
   { href: "/photography", label: "Photography" },
-  { href: "/recommendations", label: "Recommendations" },
+  { href: "/recommendations", label: "Cultural Stew" },
   { href: "/about", label: "About" },
 ];
 

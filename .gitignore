@@ -39,6 +39,9 @@ src/content/temp/
 # jetbrains setting folder
 .idea/
 
+# Photo originals (large files, not deployed)
+photos-source/
+
 # Playwright
 playwright-report/
 test-results/
