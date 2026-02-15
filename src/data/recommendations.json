@@ -1,11 +1,12 @@
 [
   {
-    "type": "book",
-    "title": "Sample Book Title",
-    "creator": "Author Name",
-    "cover": "https://placehold.co/200x300/1a3a5c/ffffff?text=Book",
-    "note": "A brief note about why you recommend this book.",
-    "tags": ["non-fiction", "science"]
+    "type": "experience",
+    "title": "Unintentionally ordering a red or white pizza",
+    "creator": "",
+    "cover": "",
+    "note": "They should put any red (no cheese) or white (no sauce) pizzas in a separate part of the menu. I have my night ruined two or 3 times a year by accidently ordering one of these things. 0.2 microCormys awarded because it allows for an enjoyable tirade.",
+    "tags": ["food", "dissapointing"],
+    "rating": 0.2
   },
   {
     "type": "book",
@@ -13,15 +14,17 @@
     "creator": "Another Author",
     "cover": "https://placehold.co/200x300/1a3a5c/ffffff?text=Book+2",
     "note": "Another recommendation.",
-    "tags": ["fiction", "classic"]
+    "tags": ["fiction", "classic"],
+    "rating": 7.5
   },
   {
-    "type": "podcast",
-    "title": "Sample Podcast",
-    "creator": "Podcast Host",
-    "cover": "https://placehold.co/200x200/0d7377/ffffff?text=Podcast",
-    "note": "A brief note about this podcast.",
-    "tags": ["technology", "interviews"]
+    "type": "experience",
+    "title": "Winning big on a scratchcard",
+    "creator": "",
+    "cover": "",
+    "note": "Winning big is any win which is 10X more than the value of the scratchcard. This feels absolutly brilliant, 0.2 microCormys docked because you're likely to hand the winnings straight back to the National Lottery",
+    "tags": ["technology", "interviews"],
+    "rating": 9.8
   },
   {
     "type": "podcast",
@@ -29,15 +32,17 @@
     "creator": "Another Host",
     "cover": "https://placehold.co/200x200/0d7377/ffffff?text=Podcast+2",
     "note": "Another podcast recommendation.",
-    "tags": ["storytelling", "history"]
+    "tags": ["storytelling", "history"],
+    "rating": 8.0
   },
   {
     "type": "movie",
-    "title": "Sample Film",
-    "creator": "Director Name",
-    "cover": "https://placehold.co/200x300/92400e/ffffff?text=Film",
-    "note": "A brief note about this film.",
-    "tags": ["drama", "award-winner"]
+    "title": "Sinners",
+    "creator": "Ryan Coogler",
+    "cover": "/assets/img/recommendations/sinners-poster.jpg",
+    "note": "Top notch film, I thought Michael B. Jordan was outstanding. Irish vampire, Rocky Road to Dublin and generally a fair bit of air time the Irish (although unsure if we are considered oppressors or oppressed). Only minor drawback was the faint marvel style of the closing scenes.",
+    "tags": ["drama", "horror"],
+    "rating": 8.1
   },
   {
     "type": "movie",
@@ -45,7 +50,8 @@
     "creator": "Another Director",
     "cover": "https://placehold.co/200x300/92400e/ffffff?text=Film+2",
     "note": "Another film recommendation.",
-    "tags": ["documentary", "nature"]
+    "tags": ["documentary", "nature"],
+    "rating": 6.5
   },
   {
     "type": "tv",
@@ -53,7 +59,8 @@
     "creator": "Showrunner Name",
     "cover": "https://placehold.co/200x300/38b2ac/ffffff?text=TV",
     "note": "A brief note about this TV show.",
-    "tags": ["drama", "thriller"]
+    "tags": ["drama", "thriller"],
+    "rating": 8.8
   },
   {
     "type": "tv",
@@ -61,7 +68,8 @@
     "creator": "Another Showrunner",
     "cover": "https://placehold.co/200x300/38b2ac/ffffff?text=TV+2",
     "note": "Another TV recommendation.",
-    "tags": ["comedy", "classic"]
+    "tags": ["comedy", "classic"],
+    "rating": 7.2
   },
   {
     "type": "sport",
@@ -69,7 +77,8 @@
     "creator": "League / Event",
     "cover": "https://placehold.co/200x200/2d3748/ffffff?text=Sport",
     "note": "A brief note about this sport or event.",
-    "tags": ["football", "live"]
+    "tags": ["football", "live"],
+    "rating": 9.0
   },
   {
     "type": "sport",
@@ -77,7 +86,8 @@
     "creator": "Another League",
     "cover": "https://placehold.co/200x200/2d3748/ffffff?text=Sport+2",
     "note": "Another sport recommendation.",
-    "tags": ["rugby", "live"]
+    "tags": ["rugby", "live"],
+    "rating": 7.8
   },
   {
     "type": "food",
@@ -85,7 +95,8 @@
     "creator": "Location / Chef",
     "cover": "https://placehold.co/200x200/d4a259/ffffff?text=Food",
     "note": "A brief note about this restaurant or recipe.",
-    "tags": ["restaurant", "irish"]
+    "tags": ["restaurant", "irish"],
+    "rating": 8.3
   },
   {
     "type": "food",
@@ -93,6 +104,7 @@
     "creator": "Another Location",
     "cover": "https://placehold.co/200x200/d4a259/ffffff?text=Food+2",
     "note": "Another food recommendation.",
-    "tags": ["cafe", "brunch"]
+    "tags": ["cafe", "brunch"],
+    "rating": 7.0
   }
 ]

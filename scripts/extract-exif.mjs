@@ -106,6 +106,7 @@ async function processPhotos() {
       // Generate thumbnail (800px wide)
       const thumbPath = path.join(THUMB_DIR, webpName);
       await sharp(filePath)
+        .rotate() // auto-rotate based on EXIF orientation
         .resize(THUMB_WIDTH, null, { withoutEnlargement: true })
         .webp({ quality: THUMB_QUALITY })
         .toFile(thumbPath);
@@ -114,6 +115,7 @@ async function processPhotos() {
       // Generate display version (1920px wide)
       const displayPath = path.join(DISPLAY_DIR, webpName);
       await sharp(filePath)
+        .rotate() // auto-rotate based on EXIF orientation
         .resize(DISPLAY_WIDTH, null, { withoutEnlargement: true })
         .webp({ quality: DISPLAY_QUALITY })
         .toFile(displayPath);

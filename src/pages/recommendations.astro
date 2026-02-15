@@ -5,27 +5,28 @@ import { SITE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import recommendations from "@/data/recommendations.json";
 
-const categories = ["all", "book", "podcast", "movie", "tv", "sport", "food"] as const;
+const categories = ["all", "book", "podcast", "movie", "tv", "sport", "food", "experience"] as const;
 
 const categoryLabels: Record<string, string> = {
   all: "All",
   book: "Books",
   podcast: "Podcasts",
-  movie: "Movies",
+  movie: "Film",
   tv: "TV",
   sport: "Live Sport",
   food: "Food",
+  experience: "Experiences",
 };
 
 // Collect all unique tags from the data
 const allTags = [...new Set(recommendations.flatMap((item) => item.tags || []))].sort();
 ---
 
-<Layout title={`Cultural Stew | ${SITE.title}`} description="Books, podcasts, films, TV, sport, and food recommended by Cormac Dineen.">
+<Layout title={`Cultural stew | ${SITE.title}`} description="Books, podcasts, films, TV, sport, and food recommended by Cormac Dineen.">
   <Header />
   <main id="main-content" class="mx-auto w-full max-w-3xl px-4 pb-12">
-    <h1 class="text-2xl font-semibold sm:text-3xl mt-8">Cultural Stew</h1>
-    <p class="mt-2 mb-6 italic">Frivilous pursuits are the only thing that distinguish our lives from those of jellyfish.</p>
+    <h1 class="text-2xl font-semibold sm:text-3xl mt-8">Cultural stew</h1>
+    <p class="mt-2 mb-6 italic">Everything is ranked out of 10 on the Cormyscale. For calibration, unintentionally ordering a red or white pizza is a 0.2 experience on the Cormyscale and winning big on scratchcard is a 9.8.</p>
 
     <!-- Category filter tabs -->
     <div class="flex gap-2 mb-4 flex-wrap">
@@ -44,35 +45,53 @@ const allTags = [...new Set(recommendations.flatMap((item) => item.tags || []))]
       ))}
     </div>
 
-    <!-- Tag filter pills -->
+    <!-- Tag filter — collapsible drawer -->
     {allTags.length > 0 && (
-      <div class="flex gap-1.5 mb-8 flex-wrap items-center">
-        <span class="text-xs text-foreground/50 mr-1">Tags:</span>
-        {allTags.map((tag) => (
-          <button
-            class="tag-btn px-2.5 py-0.5 rounded-full text-xs border border-border text-foreground/70 hover:border-accent hover:text-accent transition-colors cursor-pointer bg-transparent"
-            data-tag={tag}
-          >
-            {tag}
-          </button>
-        ))}
+      <div class="mb-6">
+        <button id="tag-filter-toggle" class="px-4 py-1.5 rounded-full text-sm font-medium border border-border text-foreground/70 bg-transparent hover:border-accent hover:text-accent cursor-pointer transition-colors">
+          Filter
+        </button>
+        <div id="tag-filter-drawer" class="hidden mt-3">
+          <div class="flex gap-1.5 flex-wrap items-center">
+            <span class="text-xs text-foreground/50 mr-1">Tags:</span>
+            {allTags.map((tag) => (
+              <button class="tag-btn px-2.5 py-0.5 rounded-full text-xs border border-border text-foreground/70 bg-transparent hover:border-accent hover:text-accent cursor-pointer transition-colors" data-tag={tag}>{tag}</button>
+            ))}
+          </div>
+        </div>
       </div>
     )}
 
     <!-- Grid of cards -->
     <div id="rec-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {recommendations.map((item) => (
+      {recommendations.map((item) => {
+        const rating = (item as any).rating as number | undefined;
+        return (
         <div
           class="rec-card border border-border rounded-lg overflow-hidden"
           data-type={item.type}
           data-tags={(item.tags || []).join(",")}
         >
-          <img
-            src={item.cover}
-            alt={item.title}
-            class="w-full h-48 object-cover"
-            loading="lazy"
-          />
+          <div class="relative">
+            {item.cover ? (
+              <img
+                src={item.cover}
+                alt={item.title}
+                class="w-full h-64 object-cover"
+                loading="lazy"
+              />
+            ) : (
+              <div class="w-full h-64 bg-gradient-to-br from-accent/20 via-accent/10 to-background flex items-center justify-center p-6">
+                <span class="text-2xl font-bold text-accent/80 text-center leading-tight">{item.title}</span>
+              </div>
+            )}
+            {rating && (
+              <div class="absolute top-2 right-2 bg-background/80 backdrop-blur-sm rounded-lg px-2.5 py-1.5">
+                <span class="text-2xl font-bold text-accent">{rating}</span>
+                <span class="text-[10px] text-foreground/50 ml-0.5 block text-center">Cormyscale</span>
+              </div>
+            )}
+          </div>
           <div class="p-3">
             <span class="text-xs uppercase tracking-wide text-accent font-medium">{item.type}</span>
             <h3 class="font-semibold mt-1">{item.title}</h3>
@@ -87,7 +106,8 @@ const allTags = [...new Set(recommendations.flatMap((item) => item.tags || []))]
             )}
           </div>
         </div>
-      ))}
+        );
+      })}
     </div>
   </main>
   <Footer />
@@ -100,7 +120,7 @@ const allTags = [...new Set(recommendations.flatMap((item) => item.tags || []))]
     const cards = document.querySelectorAll(".rec-card");
 
     let activeCategory = "all";
-    let activeTags = new Set();
+    let activeTag = null;
 
     function applyFilters() {
       cards.forEach((card) => {
@@ -108,7 +128,7 @@ const allTags = [...new Set(recommendations.flatMap((item) => item.tags || []))]
         const cardTags = card.dataset.tags ? card.dataset.tags.split(",") : [];
 
         const matchesCategory = activeCategory === "all" || cardType === activeCategory;
-        const matchesTags = activeTags.size === 0 || cardTags.some((t) => activeTags.has(t));
+        const matchesTags = !activeTag || cardTags.includes(activeTag);
 
         card.style.display = matchesCategory && matchesTags ? "" : "none";
       });
@@ -130,21 +150,39 @@ const allTags = [...new Set(recommendations.flatMap((item) => item.tags || []))]
       });
     });
 
-    // Tag filter — toggle on/off (additive)
+    // Tag filter drawer toggle
+    const tagFilterToggle = document.getElementById("tag-filter-toggle");
+    const tagFilterDrawer = document.getElementById("tag-filter-drawer");
+    if (tagFilterToggle && tagFilterDrawer) {
+      tagFilterToggle.addEventListener("click", () => {
+        tagFilterDrawer.classList.toggle("hidden");
+        const isOpen = !tagFilterDrawer.classList.contains("hidden");
+        tagFilterToggle.textContent = isOpen ? "Hide filters" : "Filter";
+        if (isOpen) {
+          tagFilterToggle.classList.add("bg-accent", "text-white", "border-accent");
+          tagFilterToggle.classList.remove("text-foreground/70", "border-border");
+        } else {
+          tagFilterToggle.classList.remove("bg-accent", "text-white", "border-accent");
+          tagFilterToggle.classList.add("text-foreground/70", "border-border");
+        }
+      });
+    }
+
+    // Tag filter — single-select
     tagButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const tag = btn.dataset.tag;
-
-        if (activeTags.has(tag)) {
-          activeTags.delete(tag);
-          btn.classList.remove("bg-accent", "text-white", "border-accent");
-          btn.classList.add("border-border", "text-foreground/70");
+        tagButtons.forEach((b) => {
+          b.classList.remove("bg-accent", "text-white", "border-accent");
+          b.classList.add("border-border", "text-foreground/70");
+        });
+        if (activeTag === tag) {
+          activeTag = null;
         } else {
-          activeTags.add(tag);
+          activeTag = tag;
           btn.classList.add("bg-accent", "text-white", "border-accent");
           btn.classList.remove("border-border", "text-foreground/70");
         }
-
         applyFilters();
       });
     });

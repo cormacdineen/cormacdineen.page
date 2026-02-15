@@ -19,8 +19,7 @@ const placeholderPhotos = [
 
 const photos = hasRealPhotos ? photosData : placeholderPhotos;
 
-// Collect unique dates (year-month) and tags for filtering
-const allDates = [...new Set(photos.map((p) => p.date?.slice(0, 7)).filter(Boolean))].sort().reverse();
+// Collect unique tags for filtering
 const allTags = [...new Set(photos.flatMap((p) => p.tags || []))].sort();
 ---
 
@@ -30,26 +29,20 @@ const allTags = [...new Set(photos.flatMap((p) => p.tags || []))].sort();
     <h1 class="text-2xl font-semibold sm:text-3xl mt-8">Photography</h1>
     <p class="mt-2 mb-6 italic">Click any image to view it larger. Only if you would like to.</p>
 
-    <!-- Filters -->
-    {(allDates.length > 1 || allTags.length > 0) && (
-      <div class="mb-6 space-y-3">
-        {allDates.length > 1 && (
-          <div class="flex gap-2 flex-wrap items-center">
-            <span class="text-xs text-foreground/50 mr-1">Date:</span>
-            <button class="date-btn px-3 py-1 rounded-full text-xs font-medium border border-accent bg-accent text-white cursor-pointer transition-colors" data-date="all">All</button>
-            {allDates.map((d) => (
-              <button class="date-btn px-3 py-1 rounded-full text-xs font-medium border border-border text-foreground/70 bg-transparent hover:border-accent cursor-pointer transition-colors" data-date={d}>{d}</button>
-            ))}
-          </div>
-        )}
-        {allTags.length > 0 && (
+    <!-- Filters — collapsible drawer (tags only) -->
+    {allTags.length > 0 && (
+      <div class="mb-6">
+        <button id="filter-toggle" class="px-4 py-1.5 rounded-full text-sm font-medium border border-border text-foreground/70 bg-transparent hover:border-accent hover:text-accent cursor-pointer transition-colors">
+          Filter
+        </button>
+        <div id="filter-drawer" class="hidden mt-3">
           <div class="flex gap-1.5 flex-wrap items-center">
             <span class="text-xs text-foreground/50 mr-1">Tags:</span>
             {allTags.map((tag) => (
               <button class="photo-tag-btn px-2.5 py-0.5 rounded-full text-xs border border-border text-foreground/70 bg-transparent hover:border-accent hover:text-accent cursor-pointer transition-colors" data-tag={tag}>{tag}</button>
             ))}
           </div>
-        )}
+        </div>
       </div>
     )}
 
@@ -153,22 +146,35 @@ const allTags = [...new Set(photos.flatMap((p) => p.tags || []))].sort();
       if (e.key === "ArrowRight") navigate(1);
     });
 
-    // --- Filtering ---
-    const dateButtons = document.querySelectorAll(".date-btn");
+    // --- Filter drawer toggle ---
+    const filterToggle = document.getElementById("filter-toggle");
+    const filterDrawer = document.getElementById("filter-drawer");
+    if (filterToggle && filterDrawer) {
+      filterToggle.addEventListener("click", () => {
+        filterDrawer.classList.toggle("hidden");
+        const isOpen = !filterDrawer.classList.contains("hidden");
+        filterToggle.textContent = isOpen ? "Hide filters" : "Filter";
+        if (isOpen) {
+          filterToggle.classList.add("bg-accent", "text-white", "border-accent");
+          filterToggle.classList.remove("text-foreground/70", "border-border");
+        } else {
+          filterToggle.classList.remove("bg-accent", "text-white", "border-accent");
+          filterToggle.classList.add("text-foreground/70", "border-border");
+        }
+      });
+    }
+
+    // --- Tag filtering (single-select) ---
     const tagButtons = document.querySelectorAll(".photo-tag-btn");
-    let activeDate = "all";
-    let activeTags = new Set();
+    let activeTag = null;
 
     function applyFilters() {
       visibleItems = [];
       allItems.forEach((item) => {
-        const itemDate = item.dataset.date || "";
         const itemTags = item.dataset.tags ? item.dataset.tags.split(",") : [];
+        const matches = !activeTag || itemTags.includes(activeTag);
 
-        const matchesDate = activeDate === "all" || itemDate === activeDate;
-        const matchesTags = activeTags.size === 0 || itemTags.some((t) => activeTags.has(t));
-
-        if (matchesDate && matchesTags) {
+        if (matches) {
           item.style.display = "";
           visibleItems.push(item);
         } else {
@@ -177,28 +183,20 @@ const allTags = [...new Set(photos.flatMap((p) => p.tags || []))].sort();
       });
     }
 
-    dateButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        activeDate = btn.dataset.date;
-        dateButtons.forEach((b) => {
-          b.classList.remove("bg-accent", "text-white", "border-accent");
-          b.classList.add("bg-transparent", "text-foreground/70", "border-border");
-        });
-        btn.classList.add("bg-accent", "text-white", "border-accent");
-        btn.classList.remove("bg-transparent", "text-foreground/70", "border-border");
-        applyFilters();
-      });
-    });
-
     tagButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const tag = btn.dataset.tag;
-        if (activeTags.has(tag)) {
-          activeTags.delete(tag);
-          btn.classList.remove("bg-accent", "text-white", "border-accent");
-          btn.classList.add("border-border", "text-foreground/70");
+        // Deselect all buttons first
+        tagButtons.forEach((b) => {
+          b.classList.remove("bg-accent", "text-white", "border-accent");
+          b.classList.add("border-border", "text-foreground/70");
+        });
+        if (activeTag === tag) {
+          // Toggle off — show all
+          activeTag = null;
         } else {
-          activeTags.add(tag);
+          // Activate this tag only
+          activeTag = tag;
           btn.classList.add("bg-accent", "text-white", "border-accent");
           btn.classList.remove("border-border", "text-foreground/70");
         }

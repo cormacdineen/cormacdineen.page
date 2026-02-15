@@ -221,23 +221,6 @@
     }
   },
   {
-    "thumb": "/assets/img/photography/thumbs/DSC04654.webp",
-    "display": "/assets/img/photography/display/DSC04654.webp",
-    "alt": "DSC04654",
-    "caption": "",
-    "date": "2025-11-28",
-    "camera": "",
-    "tags": ["heron", "kew gardens", "autumn", "wildlife"],
-    "exif": {
-      "focalLength": "",
-      "aperture": "",
-      "iso": null,
-      "shutter": "",
-      "width": 6000,
-      "height": 4000
-    }
-  },
-  {
     "thumb": "/assets/img/photography/thumbs/DSC04656.webp",
     "display": "/assets/img/photography/display/DSC04656.webp",
     "alt": "DSC04656",
@@ -275,7 +258,7 @@
     "thumb": "/assets/img/photography/thumbs/DSC04606.webp",
     "display": "/assets/img/photography/display/DSC04606.webp",
     "alt": "DSC04606",
-    "caption": "Changing",
+    "caption": "",
     "date": "2025-11-13",
     "camera": "",
     "tags": ["maple", "trees", "kew gardens", "autumn"],
@@ -292,7 +275,7 @@
     "thumb": "/assets/img/photography/thumbs/DSC04593.webp",
     "display": "/assets/img/photography/display/DSC04593.webp",
     "alt": "DSC04593",
-    "caption": "Lights",
+    "caption": "",
     "date": "2025-11-11",
     "camera": "",
     "tags": ["trees", "kew gardens", "winter"],
@@ -309,7 +292,7 @@
     "thumb": "/assets/img/photography/thumbs/DSC04595.webp",
     "display": "/assets/img/photography/display/DSC04595.webp",
     "alt": "DSC04595",
-    "caption": "Friends",
+    "caption": "",
     "date": "2025-11-11",
     "camera": "",
     "tags": ["trees", "kew gardens", "autumn", "landscape"],
@@ -1104,7 +1087,6 @@
       "height": 1080
     }
   },
-
   {
     "thumb": "/assets/img/photography/thumbs/DSC03787.webp",
     "display": "/assets/img/photography/display/DSC03787.webp",
